@@ -1,0 +1,15 @@
+{
+  "verbose": true,
+   "watch": [
+        "src"
+    ],
+  "ext": "ts",
+  "ignore": [
+        "*.test.js", 
+        "fixtures/*",  
+        ".git",
+        "node_modules/**/node_modules",
+        "src/**/*.spec.ts"
+    ],
+  "exec": "ts-node ./src/index.ts"
+}
