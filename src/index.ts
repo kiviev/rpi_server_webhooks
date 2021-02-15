@@ -43,17 +43,18 @@ app.use((req: Request, res: Response) =>{
         status: 'KO',
         message: 'Page not Found' 
     }
-  res.status(404).send(result);
+
+    res.status(404).send(result);
 });
 
 // Handle 500
 app.use((err:any, req: Request, res: Response, next:CallableFunction) => {
   
-  res.status(500).send({ 
-      code: 500,
-      status: 'KO',
-      message: err.toString()
-    });
+    res.status(500).send({ 
+        code: 500,
+        status: 'KO',
+        message: err.toString()
+        });
 });
 
 // Starting the Server

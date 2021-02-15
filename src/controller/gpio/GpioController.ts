@@ -19,11 +19,15 @@ class GpioController{
     public pinStatus (req: Request, res: Response) {
         const pinId = GpioController.getPinId(req);
         GpioController.validate(pinId);
+
+        const facade = new GpioFacade(pinId, 'in');
+        const status = facade.readSync();
+        console.log(status)
         
         const result = {
-            route: 'Pin',
+            route: 'PinStatus',
             pinId,
-            status: 'OK'
+            status: status
         };
 
         res.send(result);     
@@ -35,7 +39,6 @@ class GpioController{
         GpioController.validate(pinId)
         const on: boolean = req.params.status === 'on';
 
-        GpioController.validate(pinId);
         
         const facade = new GpioFacade(pinId, 'in');
 
