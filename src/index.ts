@@ -47,11 +47,14 @@ app.use((req: Request, res: Response) =>{
 });
 
 // Handle 500
-app.use(function(CallableFunction: any, req: Request, res: Response, next:CallableFunction) {
-  res.status(500).send('500: Internal Server Error');
+app.use((err:any, req: Request, res: Response, next:CallableFunction) => {
+  
+  res.status(500).send({ 
+      code: 500,
+      status: 'KO',
+      message: err.toString()
+    });
 });
-
-
 
 // Starting the Server
 app.listen(app.get('port'), () => {
