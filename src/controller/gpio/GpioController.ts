@@ -17,40 +17,40 @@ class GpioController{
     }
 
     public pinStatus (req: Request, res: Response) {
-        const pinId = GpioController.getPinId(req);
-        GpioController.validate(pinId);
+        const gpio = GpioController.getPinId(req);
+        GpioController.validate(gpio);
 
-        const facade = new GpioFacade(pinId, 'in');
-        const status = facade.readSync();
-        console.log(status)
-        
+        const facade = GpioFacade.i();
+        const status = facade.readSync(gpio);
+                
         const result = {
             route: 'PinStatus',
-            pinId,
-            status: status
+            gpio,
+            on: status == 1 ? true : false
         };
 
         res.send(result);     
     }
 
     public setPinStatus (req: Request, res: Response) {
-        // const id = parseInt(req.params.id);
-        const pinId: number = GpioController.getPinId(req);
-        GpioController.validate(pinId)
+     
+        const gpio: number = GpioController.getPinId(req);
+        GpioController.validate(gpio)
         const on: boolean = req.params.status === 'on';
 
         
-        const facade = new GpioFacade(pinId, 'in');
+        const facade = GpioFacade.i();
+        facade.setPin(gpio, 'out')
 
         if(on){
-            facade.onSync();
+            facade.onSync(gpio);
         }else{
-            facade.offSync();
+            facade.offSync(gpio);
         }
       
         const result = {
             route: 'PinStatus',
-            pinId,
+            gpio,
             on
         };
 

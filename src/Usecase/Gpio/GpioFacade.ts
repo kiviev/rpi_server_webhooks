@@ -19,36 +19,90 @@ export default class GpioFacade
             low: 'low'
         };
 
-    pin: PinEntity;
 
-    constructor(gpio: number, direction: Direction){
-        
+    pins: PinEntity[] = [];
+
+    static instance: GpioFacade;
+
+    constructor(){
         if(!GpioFacade.gpioIsAccesible()){ 
             console.error('Gpio not found in this device');
             throw new Error('Gpio not found in this device')
-        }else{
-            this.pin = new PinEntity(gpio, direction);
         }
     }
 
-    public onSync()
+    public static i()
     {
-        this.pin.onSync();
+        if (!GpioFacade.instance){
+            GpioFacade.instance = new GpioFacade();
+        }
+
+        return GpioFacade.instance;
     }
 
-    public offSync()
+    public setPin(gpio:number, direction: Direction)
     {
-        this.pin.offSync();
+        let pin = this.pins[gpio];
+        if(pin){
+            if(pin.direction() != direction){
+                this.pins[gpio] = new PinEntity(gpio, direction);
+            }
+        }else {
+            this.pins[gpio] = new PinEntity(gpio, direction);
+        }
     }
 
-    public readSync(): BinaryValue
+    public onSync(gpio: number)
     {
-        return this.pin.readSync();
+        let pin = this.pins[gpio];
+        
+        console.log(pin)
+        if(pin){
+            pin.onSync();
+        }
+    }
+
+    public offSync(gpio:number)
+    {
+        let pin = this.pins[gpio];
+
+        if (pin) {
+            pin.offSync();
+        }
+    }
+
+    public readSync(gpio:number)
+    {
+        let result = null;
+        let pin = this.pins[gpio];
+
+        if (pin) {
+            result = pin.readSync();
+        }
+
+        return result;
     }
 
     public static gpioIsAccesible()
     {
         return PinEntity.accessible;
+    }
+
+    public direction(gpio:number)
+    {
+        let result = null;
+        let pin = this.pins[gpio];
+
+        if (pin) {
+            result = this.pins[gpio].direction();
+        }
+
+        return result;
+    }
+
+    public getPin(gpio:number)
+    {
+        return this.pins[gpio];
     }
 
 }
