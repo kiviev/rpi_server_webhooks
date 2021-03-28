@@ -1,9 +1,8 @@
-import { Request, Response } from 'express';
-import GpioFacade from '../../Usecase/Gpio/GpioFacade';
+import {Request, Response} from 'express';
+import DigitalGpioFacade from '../../Usecase/Gpio/DigitalGpioFacade';
 
 
-
-class GpioController{
+class DigitalGpioController{
 
     static PIN_IDS_ALLOWED = [1,17];
 
@@ -17,13 +16,13 @@ class GpioController{
     }
 
     public pinStatus (req: Request, res: Response) {
-        const pinId = GpioController.getPinId(req);
-        GpioController.validate(pinId);
+        const pinId = DigitalGpioController.getPinId(req);
+        DigitalGpioController.validate(pinId);
 
-        const facade = new GpioFacade(pinId, 'in');
-        const status = facade.readSync();
+        const facade = new DigitalGpioFacade(pinId, 'out');
+        const status = facade.readSync(pinId);
         console.log(status)
-        
+
         const result = {
             route: 'PinStatus',
             pinId,
@@ -34,18 +33,18 @@ class GpioController{
     }
 
     public setPinStatus (req: Request, res: Response) {
-        // const id = parseInt(req.params.id);
-        const pinId: number = GpioController.getPinId(req);
-        GpioController.validate(pinId)
+
+        const pinId: number = DigitalGpioController.getPinId(req);
+        DigitalGpioController.validate(pinId)
         const on: boolean = req.params.status === 'on';
 
         
-        const facade = new GpioFacade(pinId, 'in');
+        const facade = new DigitalGpioFacade(pinId, 'out');
 
         if(on){
-            facade.onSync();
+            facade.onSync(pinId);
         }else{
-            facade.offSync();
+            facade.offSync(pinId);
         }
       
         const result = {
@@ -54,14 +53,12 @@ class GpioController{
             on
         };
 
-        console.log(result)
-
         res.send(result);     
     }
 
     private static validate(pinId: number)
     {
-        if(!GpioController.PIN_IDS_ALLOWED.includes(pinId)){
+        if(!DigitalGpioController.PIN_IDS_ALLOWED.includes(pinId)){
             const msg = 'Pin Id:' + pinId + ' is not allowed';
 
             console.error(msg);
@@ -73,12 +70,10 @@ class GpioController{
     private static getPinId(req: Request): number
     {
         const id = parseInt(req.params.id);
-        const pinId: number = id ? id : 0;
-
-        return pinId;
+        return id ? id : 0;
     }
 }
 
 
 
-export default new GpioController();
+export default new DigitalGpioController();

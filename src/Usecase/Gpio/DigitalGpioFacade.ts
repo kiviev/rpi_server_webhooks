@@ -19,36 +19,47 @@ export default class GpioFacade
             low: 'low'
         };
 
-    pin: PinEntity;
+    static pines: PinEntity[] = [];
 
     constructor(gpio: number, direction: Direction){
-        
         if(!GpioFacade.gpioIsAccesible()){ 
             console.error('Gpio not found in this device');
             throw new Error('Gpio not found in this device')
         }else{
-            this.pin = new PinEntity(gpio, direction);
+            if (!GpioFacade.pines[gpio]){
+                GpioFacade.pines[gpio] = new PinEntity(gpio, direction);
+            }
         }
     }
 
-    public onSync()
+    private static getPin(gPio: number)
     {
-        this.pin.onSync();
+        return GpioFacade.pines[gPio];
     }
 
-    public offSync()
+    public onSync(gPio: number)
     {
-        this.pin.offSync();
+        GpioFacade.getPin(gPio).onSync();
     }
 
-    public readSync(): BinaryValue
+    public offSync(gPio: number)
     {
-        return this.pin.readSync();
+        GpioFacade.getPin(gPio).offSync();
+    }
+
+    public readSync(gPio: number): BinaryValue
+    {
+        return GpioFacade.getPin(gPio).readSync();
     }
 
     public static gpioIsAccesible()
     {
         return PinEntity.accessible;
+    }
+
+    public direction(gPio: number)
+    {
+        return GpioFacade.getPin(gPio).direction();
     }
 
 }

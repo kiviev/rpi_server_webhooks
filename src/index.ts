@@ -55,6 +55,9 @@ app.use((err:any, req: Request, res: Response, next:CallableFunction) => {
         status: 'KO',
         message: err.toString()
         });
+
+    console.error(err)
+    next()
 });
 
 // Starting the Server

@@ -300,3 +300,12 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/node,vscode,phpstorm,linux,windows,osx
+/.idea/.gitignore
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/rpi_server.iml
+/src/controller/gpio/SensorGpioController.ts
+/.idea/vcs.xml
+/.idea/deployment.xml
+/.idea/sshConfigs.xml
+/.idea/webServers.xml
