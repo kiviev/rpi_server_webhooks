@@ -1,5 +1,5 @@
 import {Request, Response} from 'express';
-import DigitalGpioFacade from '../../Usecase/Gpio/DigitalGpioFacade';
+import {DigitalGpioFacade} from "../../Usecase/Gpio/Digital/DigitalGpioFacade";
 
 
 class DigitalGpioController{
@@ -17,10 +17,8 @@ class DigitalGpioController{
 
     public pinStatus (req: Request, res: Response) {
         const pinId = DigitalGpioController.getPinId(req);
-        DigitalGpioController.validate(pinId);
 
-        const facade = new DigitalGpioFacade(pinId, 'out');
-        const status = facade.readSync(pinId);
+        const status = DigitalGpioFacade.getPinStatus(pinId);
         console.log(status)
 
         const result = {
@@ -35,36 +33,16 @@ class DigitalGpioController{
     public setPinStatus (req: Request, res: Response) {
 
         const pinId: number = DigitalGpioController.getPinId(req);
-        DigitalGpioController.validate(pinId)
         const on: boolean = req.params.status === 'on';
 
-        
-        const facade = new DigitalGpioFacade(pinId, 'out');
-
-        if(on){
-            facade.onSync(pinId);
-        }else{
-            facade.offSync(pinId);
-        }
-      
+        const dStatus = DigitalGpioFacade.setPinStatus(pinId, on);
         const result = {
             route: 'DigitalSetStatus',
             pinId,
-            on
+            on: dStatus
         };
 
         res.send(result);     
-    }
-
-    private static validate(pinId: number)
-    {
-        if(!DigitalGpioController.PIN_IDS_ALLOWED.includes(pinId)){
-            const msg = 'Pin Id:' + pinId + ' is not allowed';
-
-            console.error(msg);
-            throw new Error(msg);
-            
-        }
     }
 
     private static getPinId(req: Request): number

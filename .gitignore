@@ -312,3 +312,4 @@ $RECYCLE.BIN/
 /Http/http-client.private.env.json
 /.idea/IntelliLang.xml
 /.idea/remote-targets.xml
+/.idea/remote-mappings.xml
