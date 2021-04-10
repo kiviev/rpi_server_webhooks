@@ -6,6 +6,7 @@ export class BaseGpioFacade {
         digital: [1,17],
         sensor: [18],
         pwm: [17],
+        dht: [27],
         servo: []
     };
 
@@ -23,7 +24,7 @@ export class BaseGpioFacade {
 
     protected static validateDutyCycle(dutyCycle: number)
     {
-        if(!Number.isInteger(dutyCycle)  && dutyCycle > 255 || dutyCycle < 0){
+        if(!Number.isInteger(dutyCycle) || (dutyCycle > 255 || dutyCycle < 0)){
             const msg = 'Duty cycle ' + dutyCycle + ' is not valid. Valid values in range [0-255]'
 
             console.error(msg);

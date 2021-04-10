@@ -10,7 +10,7 @@ export class DigitalGpioFacade extends BaseGpioFacade
      */
     public static getPinStatus(pinId: number): number
     {
-        this.validateGpioId(pinId, 'digital')
+        this.validateGpioId(pinId, 'digital');
         const manager = new GpioManager(pinId, GpioManager.DIRECTION.out);
         return manager.readSync(pinId);
     }

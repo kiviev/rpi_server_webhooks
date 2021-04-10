@@ -1,4 +1,3 @@
-// import {Gpio, Direction, Edge, Options} from 'onoff';
 
 import {Gpio} from "pigpio";
 

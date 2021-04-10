@@ -1,5 +1,5 @@
-import GpioManager from "./GpioManager";
-import {BaseGpioFacade} from "./BaseGpioFacade";
+import GpioManager from "../GpioManager";
+import {BaseGpioFacade} from "../BaseGpioFacade";
 
 
 export class PWMGpioFacade extends BaseGpioFacade{
@@ -10,7 +10,7 @@ export class PWMGpioFacade extends BaseGpioFacade{
      * @param gpioId
      * @param dutyCycle int range [0-255]
      */
-    public static pwm(gpioId: number, dutyCycle: number): number
+    public static pwmDutyCycle(gpioId: number, dutyCycle: number): number
     {
         PWMGpioFacade.validatePwMInput(gpioId, dutyCycle);
 
