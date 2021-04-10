@@ -24,7 +24,7 @@ class DigitalGpioController{
         const result = {
             route: 'DigitalStatus',
             pinId,
-            status: status
+            status: !!status
         };
 
         res.send(result);     
@@ -39,7 +39,7 @@ class DigitalGpioController{
         const result = {
             route: 'DigitalSetStatus',
             pinId,
-            on: dStatus
+            on: !!dStatus
         };
 
         res.send(result);     
