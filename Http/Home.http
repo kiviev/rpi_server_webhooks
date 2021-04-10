@@ -1,0 +1,4 @@
+
+### Basic authorization with variables.
+GET http://{{host}}:{{port}}
+Authorization: Basic {{user}} {{pass}}

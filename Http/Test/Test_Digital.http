@@ -1,0 +1,43 @@
+# Status
+GET http://{{host}}:{{port}}/gpio/digital/17
+Authorization: Basic {{user}} {{pass}}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+  client.assert(response.body.route === 'DigitalStatus', "Response Route is not DigitalStatus");
+  client.assert(response.body.pinId === 17 , "Response pinId not is 17");
+});
+%}
+
+
+### Basic authorization with variables
+## On pin
+GET http://{{host}}:{{port}}/gpio/digital/17/set-status/on
+Authorization: Basic {{user}} {{pass}}
+Accept: application/json
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+  client.assert(response.body.route === 'DigitalSetStatus', "Response Route is not DigitalSetStatus");
+  client.assert(response.body.pinId === 17 , "Response pinId not is 17");
+  client.assert(response.body.on === true , "Response on == false");
+});
+%}
+
+
+### Basic authorization with variables
+## Off pin
+GET http://{{host}}:{{port}}/gpio/digital/17/set-status/off
+Authorization: Basic {{user}} {{pass}}
+Accept: application/json
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+  client.assert(response.body.route === 'DigitalSetStatus', "Response Route is not DigitalSetStatus");
+  client.assert(response.body.pinId === 17 , "Response pinId not is 17");
+  client.assert(response.body.on === false , "Response on == false");
+});
+%}

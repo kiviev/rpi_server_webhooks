@@ -1,0 +1,17 @@
+### Basic authorization with variables
+## Status
+GET http://{{host}}:{{port}}/gpio/digital/17
+Authorization: Basic {{user}} {{pass}}
+Accept: application/json
+
+### Basic authorization with variables
+## On pin
+GET http://{{host}}:{{port}}/gpio/digital/17/set-status/on
+Authorization: Basic {{user}} {{pass}}
+Accept: application/json
+
+### Basic authorization with variables
+## Off pin
+GET http://{{host}}:{{port}}/gpio/digital/17/set-status/off
+Authorization: Basic {{user}} {{pass}}
+Accept: application/json

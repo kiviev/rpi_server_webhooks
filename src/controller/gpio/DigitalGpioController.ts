@@ -24,7 +24,7 @@ class DigitalGpioController{
         console.log(status)
 
         const result = {
-            route: 'PinStatus',
+            route: 'DigitalStatus',
             pinId,
             status: status
         };
@@ -48,7 +48,7 @@ class DigitalGpioController{
         }
       
         const result = {
-            route: 'PinStatus',
+            route: 'DigitalSetStatus',
             pinId,
             on
         };

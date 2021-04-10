@@ -6,12 +6,13 @@ export default class CredentialsHelper
 
     public static getCredentials() : ICredential
     {
-        const credentials: string = process.env.CREDENTIALS || '';
-        const cred = credentials.split(":");
+        const credentialsUser: string = process.env.CREDENTIALS_USER || '';
+        const credentialsPass: string = process.env.CREDENTIALS_PASSWORD || '';
+
 
         return {
-            username: cred[0] ? cred[0] : '',
-            password: cred[1] ? cred[1] : ''
+            username: credentialsUser ? credentialsUser : '',
+            password: credentialsPass ? credentialsPass : ''
         }
     }
 }

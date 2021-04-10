@@ -309,3 +309,6 @@ $RECYCLE.BIN/
 /.idea/deployment.xml
 /.idea/sshConfigs.xml
 /.idea/webServers.xml
+/Http/http-client.private.env.json
+/.idea/IntelliLang.xml
+/.idea/remote-targets.xml
