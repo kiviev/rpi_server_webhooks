@@ -1,10 +1,10 @@
 import {Request, Response} from 'express';
 import {DigitalGpioFacade} from "../../Usecase/Gpio/Digital/DigitalGpioFacade";
+import {BaseGpioController} from "./BaseGpioController";
 
 
-class DigitalGpioController{
+class DigitalGpioController extends BaseGpioController{
 
-    static PIN_IDS_ALLOWED = [1,17];
 
     public index (req: Request, res: Response) {
         const result = {
@@ -45,11 +45,6 @@ class DigitalGpioController{
         res.send(result);     
     }
 
-    private static getPinId(req: Request): number
-    {
-        const id = parseInt(req.params.id);
-        return id ? id : 0;
-    }
 }
 
 

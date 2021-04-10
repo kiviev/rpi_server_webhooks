@@ -1,10 +1,9 @@
 import {Request, Response} from 'express';
 import {promises} from 'node-dht-sensor';
+import {BaseGpioController} from "./BaseGpioController";
 
 
-class SensorGpioController{
-
-    static PIN_IDS_ALLOWED = [27];
+class SensorGpioController extends BaseGpioController{
 
 
     public async loadPin (req: Request, res: Response) 
@@ -31,22 +30,7 @@ class SensorGpioController{
         res.send({result });
     }
 
-    private static validate(pinId: number)
-    {
-        if(!SensorGpioController.PIN_IDS_ALLOWED.includes(pinId)){
-            const msg = 'Pin Id:' + pinId + ' is not allowed';
 
-            console.error(msg);
-            throw new Error(msg);
-            
-        }
-    }
-
-    private static getPinId(req: Request): number
-    {
-        const id = parseInt(req.params.id);
-        return id ? id : 0;
-    }
 }
 
 
