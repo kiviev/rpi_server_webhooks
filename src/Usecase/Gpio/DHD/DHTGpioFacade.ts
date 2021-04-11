@@ -10,7 +10,7 @@ export interface DHTResponse {
 export class DHTGpioFacade extends BaseGpioFacade{
 
 
-    public static async loadGpio(gpioId: number)
+    public static async loadGpio(gpioId: number): Promise<DHTResponse>
     {
         this.validateGpioId(gpioId, 'dht');
 
@@ -18,19 +18,19 @@ export class DHTGpioFacade extends BaseGpioFacade{
 
             let entity = new GpioDHTEntity(gpioId);
 
-            let sensor = entity.read();
+            let sensor = entity.i();
+            setInterval(() => {
+                sensor.read();
+            }, 2500); // the sensor can only be red every 2 seconds
 
             sensor.on('result', data => {
-                resolve({
-                    temp: data.temperature,
+                let res : DHTResponse = {
+                    temperature: data.temperature,
                     humidity: data.humidity
-                })
+                }
+                resolve(res)
             });
 
-            sensor.on('badChecksum', () => {
-                console.log('checksum failed');
-                reject('checksum failed')
-            });
         })
     }
 

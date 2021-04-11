@@ -60,14 +60,14 @@ export class GPioEntity
 
     public servoWrite(pulseWidth: number): number
     {
-        const result = this.instance.servoWrite(pulseWidth);
+        const result: Gpio  = this.instance.servoWrite(pulseWidth);
         return result.getServoPulseWidth();
     }
 
     public pwmWrite(dutyCycle: number): number
     {
-        const result = this.instance.pwmWrite(dutyCycle);
-        return result.getPwmRealRange();
+        const result: Gpio = this.instance.pwmWrite(dutyCycle);
+        return result.getPwmRange();
     }
 
 }
