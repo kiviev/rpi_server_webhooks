@@ -13,7 +13,7 @@ class PWMGpioController extends BaseGpioController {
         const result = PWMGpioFacade.pwmDutyCycle(gpioId, dutyCycle);
 
         const response = {
-            route: 'PWMSetDuty',
+            route: 'PWMGpioSetDuty',
             pinId: gpioId,
             status: result
         };
